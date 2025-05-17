@@ -5,7 +5,7 @@
 🎮 Building Immersive 3D Web Experiences with Three.js  
 🌟 Passionate about Interactive UI & Animations  
 📊 Exploring AI/ML (Next Phase...)  
-✍️ A writer  medium🔗 https://vishalkakda.medium.com/
+✍️ A writer -- checkout Medium🔗 https://vishalkakda.medium.com/
 💼 Freelancer
 💡 Problem Solver
 📽️ Part-time Video Editor
