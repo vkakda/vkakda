@@ -1,0 +1,15 @@
+👋 Hi, I’m Vishal (@vkakda)
+
+💻 Full Stack Developer (MERN Stack)  
+🧠 Data Structures & Algorithms in C++ 
+🎮 Building Immersive 3D Web Experiences with Three.js  
+🌟 Passionate about Interactive UI & Animations  
+📊 Exploring AI/ML (Next Phase...)  
+✍️ A writer  medium🔗 https://vishalkakda.medium.com/
+💼 Freelancer
+💡 Problem Solver
+📽️ Part-time Video Editor
+📁 Clean, Structured, Well-Commented Repositories  
+
+📫 Reach me at: vjcse12@gmail.com  
+🚀 Let’s collaborate and build something impactful!
