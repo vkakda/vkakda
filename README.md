@@ -2,7 +2,7 @@
 
 💻 Full Stack Developer (MERN Stack)  
 🧠 Data Structures & Algorithms in C++ 
-🎮 Building Immersive 3D Web Experiences with Three.js  
+🎮 Building Immersive 3D Web Experiences with GSAP and Three.js  
 🌟 Passionate about Interactive UI & Animations  
 📊 Exploring AI/ML (Next Phase...)  
 ✍️ A writer -- checkout Medium🔗 https://vishalkakda.medium.com/
