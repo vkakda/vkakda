@@ -7,6 +7,7 @@
 📊 Exploring AI/ML (Next Phase...)  
 ✍️ A writer -- checkout Medium🔗 https://vishalkakda.medium.com/
 💼 Freelancer
+🧳 A Traveller
 💡 Problem Solver
 📽️ Part-time Video Editor
 📁 Clean, Structured, Well-Commented Repositories  
