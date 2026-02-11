@@ -8,7 +8,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -20,8 +19,8 @@
             --primary: #0F9D58; 
             --accent: #00f3ff;  
             --bg: #020205;      
-            --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(15, 157, 88, 0.4);
+            --glass: rgba(255, 255, 255, 0.07);
+            --border: rgba(15, 157, 88, 0.6);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
@@ -48,6 +47,7 @@
             z-index: 100;
             backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
+            background: rgba(0,0,0,0.5);
         }
         .nav-brand { font-family: 'Share Tech Mono'; color: var(--primary); letter-spacing: 2px; font-weight: bold; }
         
@@ -71,7 +71,7 @@
             line-height: 0.8;
             margin-bottom: 20px;
             color: #fff;
-            text-shadow: 0 0 30px rgba(15, 157, 88, 0.3);
+            text-shadow: 0 0 30px rgba(15, 157, 88, 0.5);
         }
 
         .subtitle {
@@ -88,13 +88,12 @@
             border: 1px solid var(--border);
             padding: 35px;
             border-radius: 4px;
-            color: #ddd;
+            color: #fff;
             margin-bottom: 30px;
             font-size: 1.1rem;
-            box-shadow: inset 0 0 20px rgba(15, 157, 88, 0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        /* SOCIAL BAR - ALL VISIBLE & FIXED X ICON */
         .social-bar {
             display: flex; gap: 15px; margin-top: 25px; flex-wrap: wrap;
         }
@@ -102,70 +101,69 @@
             color: #fff; 
             font-size: 1.4rem; 
             text-decoration: none; 
-            border: 1px solid var(--border);
+            border: 2px solid var(--primary);
             width: 50px; height: 50px; 
             display: flex; align-items: center; justify-content: center;
-            background: rgba(255, 255, 255, 0.05);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: rgba(15, 157, 88, 0.2);
+            transition: all 0.4s;
         }
         .social-icon:hover { 
             background: var(--primary); 
             color: #000; 
-            border-color: var(--primary);
             box-shadow: 0 0 25px var(--primary);
             transform: translateY(-5px);
         }
 
         .profile-frame {
             width: 380px; height: 380px;
-            border: 1px solid var(--primary);
-            padding: 20px;
+            border: 3px solid var(--primary);
+            padding: 15px;
             position: relative;
             animation: frameRotate 12s linear infinite;
+            box-shadow: 0 0 40px rgba(15, 157, 88, 0.3);
         }
 
         .profile-img {
             width: 100%; height: 100%;
-            background-color: #111;
-            background-image: url('YOUR_IMAGE_URL_HERE'); /* PASTE IMAGE LINK HERE */
+            /* DIRECT GOOGLE DRIVE LINK APPLIED */
+            background-image: url('https://lh3.googleusercontent.com/d/1SW44keAuHLQFzV3nHBy7iLnUHtYHMzK-'); 
             background-size: cover;
             background-position: center;
-            filter: contrast(1.1) brightness(0.9);
         }
 
-        /* CONTENT GRIDS */
-        .content-header {
-            margin-bottom: 50px;
-        }
         .content-header h2 {
             font-family: 'Orbitron';
             font-size: 3.5rem;
             color: #fff;
+            margin-bottom: 30px;
+            text-shadow: 0 0 20px var(--primary);
         }
 
+        /* IMPROVED VISIBILITY FOR BENTO CARDS */
         .bento-card {
-            background: rgba(255, 255, 255, 0.02); 
-            border: 1px solid var(--border);
+            background: rgba(20, 20, 25, 0.9); 
+            border: 2px solid var(--border);
             padding: 40px; 
             transition: 0.5s;
             position: relative;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
         }
         .bento-card:hover { 
             border-color: var(--accent); 
-            background: rgba(0, 243, 255, 0.03);
-            transform: scale(1.01);
+            background: rgba(30, 30, 40, 1);
+            transform: translateY(-5px);
         }
         .bento-card h3 { 
             font-family: 'Orbitron'; 
-            color: var(--primary); 
+            color: var(--accent); 
             margin-bottom: 20px; 
             letter-spacing: 2px;
-            text-transform: uppercase;
         }
         .bento-card p {
-            font-size: 1.1rem;
-            color: #bbb;
+            font-size: 1.2rem;
+            color: #fff;
             margin-bottom: 15px;
         }
 
@@ -174,7 +172,6 @@
             padding: 18px 35px; font-family: 'Orbitron'; font-weight: 900;
             text-decoration: none; display: inline-flex; align-items: center; gap: 12px;
             margin-top: 25px;
-            letter-spacing: 1px;
             clip-path: polygon(0 0, 95% 0, 100% 25%, 100% 100%, 5% 100%, 0 75%);
         }
 
@@ -196,7 +193,7 @@
 
     <nav>
         <div class="nav-brand">OS_V2 // <span style="color:white">VISHAL</span></div>
-        <div id="clock" style="font-family: 'Share Tech Mono'; color: var(--accent); letter-spacing: 2px;">00:00:00</div>
+        <div id="clock" style="font-family: 'Share Tech Mono'; color: var(--accent);">00:00:00</div>
     </nav>
 
     <section>
@@ -210,11 +207,11 @@
                 </div>
 
                 <div class="social-bar">
-                    <a href="https://yourwebsite.com" class="social-icon" title="Website"><i class="fas fa-globe"></i></a>
-                    <a href="https://instagram.com/yourhandle" class="social-icon" title="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="https://linkedin.com/in/yourhandle" class="social-icon" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="https://x.com/yourhandle" class="social-icon" title="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
-                    <a href="mailto:vjcse12@gmail.com" class="social-icon" title="Email"><i class="fas fa-envelope"></i></a>
+                    <a href="#" class="social-icon"><i class="fas fa-globe"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="social-icon"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="mailto:vjcse12@gmail.com" class="social-icon"><i class="fas fa-envelope"></i></a>
                 </div>
 
                 <a href="https://buymeacoffee.com/vishalkaushik" class="coffee-btn">
@@ -236,7 +233,7 @@
             <h2>SERVICES</h2>
         </div>
         
-        <div class="bento-card">
+        <div class="bento-card scroll-reveal">
             <h3>Full-Stack Product Engineering</h3>
             <p>I build complete digital products that combine strong engineering with thoughtful design. From frontend interfaces to backend architecture, I develop systems that are scalable, secure, and ready for real-world usage.</p>
             <p>My work includes full-stack application development, API creation, database design, authentication flows, and cloud deployment. I integrate AI capabilities to create smarter workflows, automate decisions, and enhance user experiences.</p>
@@ -250,27 +247,24 @@
             <h2>MY VISION</h2>
         </div>
         
-        <div class="bento-card">
+        <div class="bento-card scroll-reveal">
             <h3>Empowering Through Intelligence</h3>
             <p>I see technology as a force that should empower people and remove complexity from their lives. My vision is to create intelligent, scalable systems that solve meaningful problems and open new possibilities.</p>
             <p>By combining engineering, design, and AI, I aim to build digital platforms that are not only powerful but genuinely useful. Every product I work on should contribute to progress, opportunity, and a smarter future.</p>
         </div>
     </section>
 
-    <footer style="padding: 80px 10% 40px; text-align: center; border-top: 1px solid var(--border); font-family: 'Share Tech Mono'; color: #444; width: 100%;">
-        <p>VISHAL // SYSTEM_ARCHITECT // 2026</p>
-        <p style="font-size: 0.8rem; margin-top: 10px;">LATENCY: OPTIMAL // STATUS: ONLINE</p>
+    <footer style="padding: 80px 10%; text-align: center; border-top: 1px solid var(--border); font-family: 'Share Tech Mono'; color: #666;">
+        VISHAL // SYSTEM_ARCHITECT // 2026 // ALL SYSTEMS NORMAL
     </footer>
 
     <script>
-        // CLOCK
         function updateClock() {
             const now = new Date();
             document.getElementById('clock').innerText = now.toTimeString().split(' ')[0];
         }
         setInterval(updateClock, 1000);
 
-        // THREE.JS GALAXY
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -278,40 +272,39 @@
         document.getElementById('canvas-container').appendChild(renderer.domElement);
 
         const geo = new THREE.BufferGeometry();
-        const count = 2500;
+        const count = 3000;
         const posArr = new Float32Array(count * 3);
         for(let i = 0; i < count * 3; i++) { posArr[i] = (Math.random() - 0.5) * 20; }
         geo.setAttribute('position', new THREE.BufferAttribute(posArr, 3));
 
-        const mat = new THREE.PointsMaterial({ size: 0.015, color: 0x0F9D58, transparent: true, opacity: 0.5 });
+        const mat = new THREE.PointsMaterial({ size: 0.02, color: 0x0F9D58, transparent: true, opacity: 0.6 });
         const mesh = new THREE.Points(geo, mat);
         scene.add(mesh);
         camera.position.z = 5;
 
         function animate() {
             requestAnimationFrame(animate);
-            mesh.rotation.y += 0.0008;
-            mesh.rotation.x += 0.0003;
+            mesh.rotation.y += 0.001;
             renderer.render(scene, camera);
         }
         animate();
 
-        // GSAP ANIMATIONS
+        // GSAP TRIGGER FIX - Ensuring visibility
         gsap.registerPlugin(ScrollTrigger);
         
-        gsap.from(".bento-card", {
-            scrollTrigger: {
-                trigger: ".bento-card",
-                start: "top 90%",
-            },
-            opacity: 0,
-            y: 50,
-            duration: 1.2,
-            stagger: 0.3,
-            ease: "power3.out"
+        gsap.utils.toArray(".scroll-reveal").forEach(card => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 90%",
+                },
+                opacity: 0,
+                y: 50,
+                duration: 1,
+                ease: "power2.out"
+            });
         });
 
-        // RE-CALCULATE ON RESIZE
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
