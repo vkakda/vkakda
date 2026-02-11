@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vishal | Full Stack Engineer</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* CORE VARIABLES & RESET */
+        :root {
+            --bg-color: #0a0a0a;
+            --accent: #61DAFB;
+            --secondary: #bd34fe;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        /* 3D STARFIELD CANVAS */
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at bottom, #1a1a2e 0%, #000000 100%);
+        }
+
+        /* TYPOGRAPHY */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Orbitron:wght@500;700&display=swap');
+
+        h1, h2, h3 { font-family: 'Orbitron', sans-serif; }
+        p { line-height: 1.6; color: var(--text-secondary); }
+        
+        .gradient-text {
+            background: linear-gradient(to right, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* LAYOUT & GLASS CARDS */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        section {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            opacity: 0; /* Hidden for scroll animation */
+            transform: translateY(20px);
+            transition: all 0.8s ease-out;
+            margin-bottom: 50px;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 20px 0;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        /* HERO SECTION */
+        .hero {
+            text-align: center;
+            padding-top: 10vh;
+        }
+
+        .profile-img-container {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            padding: 5px;
+            background: linear-gradient(45deg, var(--accent), var(--secondary));
+            position: relative;
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--bg-color);
+            background-color: #111; /* Fallback */
+        }
+
+        .typing-container {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+            height: 30px;
+        }
+
+        /* GRID SYSTEM */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+
+        /* TECH STACK */
+        .tech-icons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .tech-tag {
+            background: rgba(255,255,255,0.08);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            border: 1px solid transparent;
+            transition: 0.3s;
+        }
+
+        .tech-tag:hover {
+            border-color: var(--accent);
+            background: rgba(97, 218, 251, 0.1);
+            color: var(--accent);
+        }
+
+        /* STATS & LINKS */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .social-btn {
+            color: white;
+            font-size: 1.5rem;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+
+        .social-btn:hover { color: var(--accent); transform: scale(1.1); }
+
+        .btn-primary {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: linear-gradient(45deg, var(--accent), var(--secondary));
+            color: #000;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: 0.3s;
+        }
+        
+        .btn-primary:hover {
+            box-shadow: 0 0 20px var(--accent);
+        }
+
+        /* QUOTES */
+        blockquote {
+            border-left: 4px solid var(--secondary);
+            padding-left: 20px;
+            font-style: italic;
+            margin: 20px 0;
+            color: #ddd;
+        }
+
+    </style>
+</head>
+<body>
+
+    <canvas id="canvas-container"></canvas>
+
+    <div class="container">
+        
+        <section class="hero visible">
+            <div class="profile-img-container">
+                <img src="https://ui-avatars.com/api/?name=Vishal&background=0D1117&color=61DAFB&size=200" class="profile-img" alt="Vishal">
+            </div>
+            <h1 style="font-size: 3rem; margin-bottom: 10px;">VISHAL</h1>
+            <div class="typing-container" id="typing-text"></div>
+            <p>Full Stack Engineer • System Thinker • AI Builder</p>
+            <br>
+            <div class="glass-card">
+                <h3>"I did not begin with computers. I began with curiosity."</h3>
+                <p>As a child, I looked at the night sky and saw questions instead of stars.<br>
+                Today, I build systems that bring order to complexity.</p>
+            </div>
+            <a href="#about" class="btn-primary">Explore My Mind <i class="fas fa-arrow-down"></i></a>
+        </section>
+
+        <section id="about">
+            <h2 class="gradient-text">🧭 Who I Am</h2>
+            <div class="grid-2">
+                <div class="glass-card">
+                    <h3>The Origin</h3>
+                    <p>Before code, there were stories. I was attracted to places where imagination meets truth.</p>
+                    <br>
+                    <p>I prepared for defence services, which taught me one eternal lesson:</p>
+                    <blockquote>Consistency builds power that intensity cannot.</blockquote>
+                </div>
+                <div class="glass-card">
+                    <h3>The Convergence</h3>
+                    <ul style="list-style: none;">
+                        <li>🔭 Curiosity &rarr; <b>Systems</b></li>
+                        <li>📖 Stories &rarr; <b>Users</b></li>
+                        <li>⚔️ Discipline &rarr; <b>Execution</b></li>
+                    </ul>
+                    <br>
+                    <p>Today I build products where <b>Engineering meets Empathy</b>.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="tech">
+            <h2 class="gradient-text">🛠 Tech Arsenal</h2>
+            <div class="glass-card">
+                <h3>Core Stack</h3>
+                <div class="tech-icons">
+                    <span class="tech-tag"><i class="fab fa-react"></i> React.js</span>
+                    <span class="tech-tag"><i class="fab fa-js"></i> Next.js</span>
+                    <span class="tech-tag"><i class="fas fa-wind"></i> Tailwind</span>
+                    <span class="tech-tag"><i class="fab fa-node"></i> Node.js</span>
+                    <span class="tech-tag"><i class="fas fa-database"></i> PostgreSQL</span>
+                    <span class="tech-tag"><i class="fas fa-robot"></i> OpenAI API</span>
+                </div>
+            </div>
+            
+            <div class="grid-2">
+                <div class="glass-card">
+                    <h3>🚀 What I Do</h3>
+                    <p>I think beyond features. I think in users, scale, and maintainability.</p>
+                    <p>From <b>frontend experiences</b> to <b>backend architecture</b> and <b>AI integrations</b>.</p>
+                </div>
+                <div class="glass-card">
+                    <h3>⚡ Philosophy</h3>
+                    <p>Build with clarity.<br>Build with responsibility.<br>Build for humans.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="mission">
+            <h2 class="gradient-text">🚀 Vision</h2>
+            <div class="glass-card" style="text-align: center;">
+                <p style="font-size: 1.2rem; color: #fff;">
+                    "If I cannot travel into space, I will build systems that someday help humanity reach further."
+                </p>
+                <br>
+                <p>Software that behaves like galaxies — interconnected, efficient, silent, powerful.</p>
+            </div>
+        </section>
+
+        <section id="contact" style="min-height: 40vh;">
+            <div style="text-align: center;">
+                <h2>Let's Connect</h2>
+                <p>Ready to build the future?</p>
+                <div class="social-links">
+                    <a href="https://github.com/YOUR_USERNAME" class="social-btn"><i class="fab fa-github"></i></a>
+                    <a href="#" class="social-btn"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="social-btn"><i class="fab fa-twitter"></i></a>
+                    <a href="mailto:your-email@example.com" class="social-btn"><i class="fas fa-envelope"></i></a>
+                </div>
+                <br><br>
+                <p style="font-size: 0.8rem; opacity: 0.5;">Designed by Gemini • Built by Vishal</p>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // --- 1. TYPING EFFECT ---
+        const textElement = document.getElementById('typing-text');
+        const phrases = ["Building Digital Intelligence", "Connecting Systems", "Designing the Future"];
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function type() {
+            const currentPhrase = phrases[phraseIndex];
+            if (isDeleting) {
+                textElement.textContent = currentPhrase.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                textElement.textContent = currentPhrase.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                isDeleting = true;
+                setTimeout(type, 2000);
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                setTimeout(type, 500);
+            } else {
+                setTimeout(type, isDeleting ? 50 : 100);
+            }
+        }
+        type();
+
+        // --- 2. SCROLL REVEAL ANIMATION ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // --- 3. STARFIELD BACKGROUND (Vanilla JS) ---
+        const canvas = document.getElementById('canvas-container');
+        const ctx = canvas.getContext('2d');
+        
+        let width, height;
+        let stars = [];
+
+        function resize() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+            initStars();
+        }
+
+        function initStars() {
+            stars = [];
+            const starCount = Math.floor(width * height / 3000); // Responsive star count
+            for (let i = 0; i < starCount; i++) {
+                stars.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    radius: Math.random() * 1.5,
+                    vx: (Math.random() - 0.5) * 0.2, // Slow horizontal movement
+                    vy: (Math.random() - 0.5) * 0.2, // Slow vertical movement
+                    alpha: Math.random(),
+                    flashSpeed: Math.random() * 0.02
+                });
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            
+            stars.forEach(star => {
+                // Move
+                star.x += star.vx;
+                star.y += star.vy;
+
+                // Wrap around screen
+                if (star.x < 0) star.x = width;
+                if (star.x > width) star.x = 0;
+                if (star.y < 0) star.y = height;
+                if (star.y > height) star.y = 0;
+
+                // Twinkle
+                star.alpha += star.flashSpeed;
+                if (star.alpha > 1 || star.alpha < 0) {
+                    star.flashSpeed = -star.flashSpeed;
+                }
+                
+                // Draw
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${Math.abs(star.alpha)})`;
+                ctx.fill();
+            });
+
+            // Connect nearby stars (Constellation effect)
+            ctx.strokeStyle = 'rgba(97, 218, 251, 0.05)';
+            ctx.lineWidth = 0.5;
+            for (let i = 0; i < stars.length; i++) {
+                for (let j = i + 1; j < stars.length; j++) {
+                    const dx = stars[i].x - stars[j].x;
+                    const dy = stars[i].y - stars[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 100) { // Connect if close
+                        ctx.beginPath();
+                        ctx.moveTo(stars[i].x, stars[i].y);
+                        ctx.lineTo(stars[j].x, stars[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+        animate();
+    </script>
+</body>
+</html>
