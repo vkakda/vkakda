@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vishal | Intelligent Digital Experiences</title>
+    <title>Vishal | System Architect & AI Builder</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,362 +11,329 @@
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
     <style>
         :root {
-            --primary: #0F9D58; /* Vishal's Green */
-            --accent: #00f3ff;  /* Cyan Neon */
-            --bg: #020205;      /* Deep Space Black */
-            --glass: rgba(255, 255, 255, 0.05);
-            --border: rgba(255, 255, 255, 0.1);
+            --primary: #0F9D58; 
+            --accent: #00f3ff;  
+            --bg: #020205;      
+            --glass: rgba(15, 157, 88, 0.03);
+            --border: rgba(15, 157, 88, 0.2);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
         
         body { 
             background-color: var(--bg); 
             color: white; 
             font-family: 'Rajdhani', sans-serif; 
-            overflow-x: hidden; 
-            overflow-y: scroll;
+            overflow-x: hidden;
+            scrollbar-width: none;
         }
 
-        /* 3D CANVAS BACKGROUND */
+        body::-webkit-scrollbar { display: none; }
+
         #canvas-container {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100vh;
             z-index: -1;
-            opacity: 0.6;
         }
 
-        /* SCROLL PROGRESS BAR */
         .progress-bar {
-            position: fixed; top: 0; left: 0; height: 3px; background: var(--primary); width: 0%; z-index: 9999;
-            box-shadow: 0 0 10px var(--primary);
+            position: fixed; top: 0; left: 0; height: 4px; background: var(--primary); width: 0%; z-index: 9999;
+            box-shadow: 0 0 15px var(--primary);
         }
 
         /* NAVIGATION */
         nav {
             position: fixed; top: 0; width: 100%;
-            padding: 20px 50px;
+            padding: 25px 50px;
             display: flex; justify-content: space-between; align-items: center;
             z-index: 100;
-            backdrop-filter: blur(5px);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
         }
-        .logo { font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 1.5rem; letter-spacing: 2px; }
-        .logo span { color: var(--primary); }
+        .logo { font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 1.2rem; letter-spacing: 4px; }
+        .logo span { color: var(--primary); text-shadow: 0 0 10px var(--primary); }
         
-        .status {
+        .status-terminal {
             font-family: 'Share Tech Mono', monospace;
             color: var(--accent);
-            font-size: 0.8rem;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            background: rgba(0,243,255,0.05);
+            padding: 5px 15px;
             border: 1px solid var(--accent);
-            padding: 5px 10px;
-            border-radius: 2px;
-            animation: blink 2s infinite;
         }
 
-        /* HERO SECTION */
+        /* HERO */
         section {
             min-height: 100vh;
-            display: flex; flex-direction: column; justify-content: center;
+            display: flex; align-items: center;
             padding: 0 10%;
             position: relative;
         }
 
         .hero-content {
-            display: flex; align-items: center; gap: 50px;
-            z-index: 2;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 40px;
+            width: 100%;
         }
 
-        .text-col { flex: 1; }
-        
         h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 5rem;
-            line-height: 1;
-            text-transform: uppercase;
+            font-size: clamp(3rem, 8vw, 6rem);
+            line-height: 0.9;
             margin-bottom: 20px;
-            background: linear-gradient(to right, #fff, #aaa);
+            background: linear-gradient(45deg, #fff 30%, var(--primary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .glitch { position: relative; }
-        
-        p.subtitle {
-            font-size: 1.5rem; color: var(--primary); letter-spacing: 3px;
-            margin-bottom: 30px; font-weight: 700;
+        .subtitle {
+            font-family: 'Share Tech Mono';
+            color: var(--accent);
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            display: block;
         }
 
-        p.desc {
-            font-size: 1.1rem; color: #ccc; max-width: 500px; line-height: 1.6;
-            margin-bottom: 40px; border-left: 3px solid var(--accent); padding-left: 20px;
+        .philosophy-text {
+            font-size: 1.1rem;
+            color: #888;
+            max-width: 550px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            border-left: 2px solid var(--primary);
+            padding-left: 25px;
         }
 
-        /* IMAGE PROFILE */
-        .profile-container {
+        /* PROFILE VISUAL */
+        .profile-wrapper {
             position: relative;
-            width: 400px; height: 400px;
+            display: flex; justify-content: center; align-items: center;
         }
-        
-        /* Holographic Ring Animation */
-        .ring {
-            position: absolute; top: -10px; left: -10px; right: -10px; bottom: -10px;
-            border: 2px solid var(--primary);
-            border-radius: 50%;
-            border-left-color: transparent;
-            border-right-color: transparent;
-            animation: spin 10s linear infinite;
-        }
-        .ring::before {
-            content: ''; position: absolute; top: 10px; left: 10px; right: 10px; bottom: 10px;
-            border: 2px solid var(--accent); border-radius: 50%;
-            border-top-color: transparent; border-bottom-color: transparent;
-            animation: spin-rev 5s linear infinite;
+
+        .profile-hex {
+            width: 350px; height: 350px;
+            clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+            background: var(--primary);
+            padding: 5px;
+            animation: pulse 4s infinite;
         }
 
         .profile-img {
             width: 100%; height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-            filter: grayscale(20%) contrast(120%);
-            box-shadow: 0 0 50px rgba(15, 157, 88, 0.3);
-            /* Using the Google Image Proxy for reliability */
-            background-image: url('https://lh3.googleusercontent.com/d/1SW44keAuHLQFzV3nHBy7iLnUHtYHMzK-');
+            background-color: #050505;
+            clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+            background-image: url('https://ui-avatars.com/api/?name=V&background=0a0a0a&color=0F9D58&size=512'); /* Placeholder */
             background-size: cover;
-            background-position: center;
+            filter: grayscale(1) contrast(1.2);
         }
 
-        /* VISION SECTION */
-        .vision-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px; margin-top: 50px;
+        /* CARDS / VISION */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            width: 100%;
         }
 
-        .card {
+        .bento-card {
             background: var(--glass);
             border: 1px solid var(--border);
-            padding: 40px;
-            border-radius: 15px;
+            padding: 30px;
+            border-radius: 5px;
+            backdrop-filter: blur(10px);
+            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .bento-card:hover {
+            background: rgba(15, 157, 88, 0.1);
+            border-color: var(--primary);
+            transform: scale(1.02);
+        }
+
+        .bento-card h3 { font-family: 'Orbitron'; color: var(--primary); margin-bottom: 15px; font-size: 0.9rem; letter-spacing: 2px;}
+
+        /* UTILS */
+        .btn {
+            padding: 15px 35px;
+            font-family: 'Orbitron';
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
             transition: 0.3s;
             position: relative;
-            overflow: hidden;
+            font-size: 0.8rem;
         }
-        .card:hover {
-            border-color: var(--primary);
-            box-shadow: 0 0 30px rgba(15, 157, 88, 0.2);
-            transform: translateY(-5px);
-        }
-        .card h3 {
-            font-family: 'Orbitron'; color: var(--accent); font-size: 1.5rem; margin-bottom: 15px;
+        .btn-main { background: var(--primary); color: #000; clip-path: polygon(0 0, 90% 0, 100% 30%, 100% 100%, 10% 100%, 0 70%); }
+        .btn-main:hover { background: #fff; box-shadow: 0 0 30px rgba(255,255,255,0.4); }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0px var(--primary)); }
+            50% { transform: scale(1.02); filter: drop-shadow(0 0 20px var(--primary)); }
         }
 
-        /* BUTTONS */
-        .btn-group { display: flex; gap: 20px; }
-
-        .btn {
-            padding: 15px 40px;
-            font-family: 'Orbitron'; font-weight: 700; text-transform: uppercase;
-            text-decoration: none;
-            clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
-            transition: 0.3s; letter-spacing: 1px;
-            display: inline-flex; align-items: center; gap: 10px;
-        }
-
-        .btn-primary {
-            background: var(--primary); color: #000;
-        }
-        .btn-primary:hover { background: #fff; box-shadow: 0 0 20px #fff; }
-
-        .btn-secondary {
-            background: transparent; border: 1px solid var(--accent); color: var(--accent);
-        }
-        .btn-secondary:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); }
-
-        /* COFFEE BUTTON SPECIAL */
-        .coffee-btn {
-            background: #FFDD00; color: #000;
-            position: relative; overflow: hidden;
-        }
-        .coffee-btn::after {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.8), transparent);
-            transform: rotate(45deg);
-            animation: shine 3s infinite;
-        }
-
-        /* ANIMATIONS */
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-        @keyframes spin-rev { 100% { transform: rotate(-360deg); } }
-        @keyframes blink { 50% { opacity: 0.5; } }
-        @keyframes shine { 0% { left: -100%; } 20% { left: 100%; } 100% { left: 100%; } }
-
-        /* RESPONSIVE */
-        @media (max-width: 900px) {
-            .hero-content { flex-direction: column-reverse; text-align: center; }
-            h1 { font-size: 3rem; }
-            .desc { margin: 0 auto 30px auto; border: none; }
-            .btn-group { justify-content: center; flex-wrap: wrap; }
-            .profile-container { width: 280px; height: 280px; margin-bottom: 30px; }
-            nav { padding: 20px; }
+        @media (max-width: 1000px) {
+            .hero-content { grid-template-columns: 1fr; text-align: center; }
+            .philosophy-text { margin: 0 auto 30px; border: none; padding: 0; }
+            .bento-grid { grid-template-columns: 1fr; }
+            .profile-hex { width: 250px; height: 250px; margin: 0 auto; }
         }
     </style>
 </head>
 <body>
 
     <div class="progress-bar" id="progressBar"></div>
-
     <div id="canvas-container"></div>
 
     <nav>
-        <div class="logo">VISHAL<span>.DEV</span></div>
-        <div class="status">SYSTEM STATUS: ONLINE</div>
+        <div class="logo">VISHAL<span>.ARCH</span></div>
+        <div class="status-terminal" id="terminal-clock">SYSTEM_STABLE // 12:00:00</div>
     </nav>
 
-    <section>
+    <section id="hero">
         <div class="hero-content">
-            <div class="text-col">
-                <p class="subtitle">FULL STACK & AI ARCHITECT</p>
-                <h1 class="glitch">VISHAL KAUSHIK</h1>
-                <p class="desc">
-                    Transforming ideas into scalable, intelligent products.
-                    I build digital systems that simplify lives and push the future forward.
+            <div class="text-block">
+                <span class="subtitle">ENGINEER • THINKER • FOUNDER</span>
+                <h1>VISHAL<br>KAUSHIK</h1>
+                <p class="philosophy-text">
+                    I did not begin with computers. I began with curiosity. 
+                    I build digital products where engineering meets empathy and speed meets reliability.
                 </p>
-
                 <div class="btn-group">
-                    <a href="https://buymeacoffee.com/vishalkaushik" target="_blank" class="btn coffee-btn">
-                        ☕ Fuel My Code
-                    </a>
-                    <a href="https://www.vishalkaushik.com" target="_blank" class="btn btn-secondary">
-                        🌐 Visit Website
-                    </a>
+                    <a href="mailto:vjcse12@gmail.com" class="btn btn-main">INITIATE CONTACT</a>
                 </div>
             </div>
-
-            <div class="img-col">
-                <div class="profile-container">
-                    <div class="ring"></div>
+            <div class="profile-wrapper">
+                <div class="profile-hex">
                     <div class="profile-img"></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section style="min-height: 80vh;">
-        <div style="z-index: 2; width: 100%;">
-            <p style="font-family: 'Share Tech Mono'; color: var(--accent); margin-bottom: 10px;">// ARCHITECTURE PHILOSOPHY</p>
-            <h2 style="font-family: 'Orbitron'; font-size: 3rem; margin-bottom: 50px;">MY VISION</h2>
-            
-            <div class="vision-grid">
-                <div class="card">
-                    <h3>01. SIMPLIFY</h3>
-                    <p style="color: #bbb;">Technology should be invisible. I build systems that remove complexity, allowing users to focus on what matters.</p>
+    <section id="vision">
+        <div style="width: 100%;">
+            <span class="subtitle">// CORE_MANIFESTO</span>
+            <h2 style="font-family: 'Orbitron'; font-size: 3rem; margin-bottom: 40px;">SYSTEM THINKING</h2>
+            <div class="bento-grid">
+                <div class="bento-card reveal">
+                    <h3>01 / PURPOSE</h3>
+                    <p>Technology should feel natural. Design should feel invisible. Work should feel purposeful.</p>
                 </div>
-                <div class="card">
-                    <h3>02. EMPOWER</h3>
-                    <p style="color: #bbb;">Engineering meets real human problems. My goal is to create opportunities through intelligent software.</p>
+                <div class="bento-card reveal">
+                    <h3>02 / DISCIPLINE</h3>
+                    <p>Consistency builds power that intensity cannot. I focus on building things that are clean and scalable.</p>
                 </div>
-                <div class="card">
-                    <h3>03. FUTURE</h3>
-                    <p style="color: #bbb;">Pushing India 🇮🇳 toward a smarter future with AI-driven, scalable, and production-ready applications.</p>
+                <div class="bento-card reveal">
+                    <h3>03 / REACH</h3>
+                    <p>Building systems that behave like galaxies—interconnected, efficient, and powerful.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer style="text-align: center; padding: 50px; border-top: 1px solid var(--border); position: relative; z-index: 2; background: rgba(0,0,0,0.8);">
-        <h2 style="font-family: 'Orbitron'; margin-bottom: 20px;">READY TO COLLABORATE?</h2>
-        <a href="mailto:vjcse12@gmail.com" style="color: var(--primary); font-size: 1.2rem; text-decoration: none;">vjcse12@gmail.com</a>
-        <br/><br/>
-        <p style="color: #555; font-size: 0.9rem;">© 2024 VISHAL KAUSHIK. ALL SYSTEMS NORMAL.</p>
+    <footer style="padding: 100px 10%; background: linear-gradient(to top, var(--primary), transparent); margin-top: 100px; text-align: center;">
+        <h2 style="font-family: 'Orbitron'; color: #000; margin-bottom: 20px;">BUILDING THE FUTURE</h2>
+        <p style="color: #000; font-family: 'Share Tech Mono';">vjcse12@gmail.com • Based in India • Scale Globally</p>
     </footer>
 
     <script>
-        // 1. GSAP ENTRANCE ANIMATIONS
-        gsap.from(".logo", { duration: 1, y: -50, opacity: 0, ease: "power3.out" });
-        gsap.from("h1", { duration: 1.5, x: -100, opacity: 0, delay: 0.5, ease: "power3.out" });
-        gsap.from(".desc", { duration: 1.5, opacity: 0, delay: 1 });
-        gsap.from(".profile-container", { duration: 2, scale: 0.5, opacity: 0, delay: 0.5, ease: "elastic.out(1, 0.5)" });
-        
-        // Scroll Progress
-        window.onscroll = function() {
-            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            let scrolled = (winScroll / height) * 100;
-            document.getElementById("progressBar").style.width = scrolled + "%";
-        };
+        // 1. TERMINAL CLOCK
+        function updateClock() {
+            const now = new Date();
+            const time = now.getHours().toString().padStart(2, '0') + ":" + 
+                         now.getMinutes().toString().padStart(2, '0') + ":" + 
+                         now.getSeconds().toString().padStart(2, '0');
+            document.getElementById('terminal-clock').innerText = `SYSTEM_STABLE // ${time}`;
+        }
+        setInterval(updateClock, 1000);
 
-        // 2. THREE.JS BACKGROUND (Scientific Particle Network)
+        // 2. THREE.JS 3D BACKGROUND (THE GALAXY)
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-        
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.getElementById('canvas-container').appendChild(renderer.domElement);
 
-        // Particles
-        const geometry = new THREE.BufferGeometry();
-        const particlesCount = 700;
-        const posArray = new Float32Array(particlesCount * 3);
+        // Create Particle Galaxy
+        const particlesGeometry = new THREE.BufferGeometry();
+        const count = 3000;
+        const positions = new Float32Array(count * 3);
+        const colors = new Float32Array(count * 3);
 
-        for(let i = 0; i < particlesCount * 3; i++) {
-            // Spread particles across a wide space
-            posArray[i] = (Math.random() - 0.5) * 15; 
+        for(let i = 0; i < count * 3; i++) {
+            positions[i] = (Math.random() - 0.5) * 10;
+            colors[i] = Math.random();
         }
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
-        geometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-
-        // Material (Green/Scientific dots)
-        const material = new THREE.PointsMaterial({
-            size: 0.03,
-            color: 0x0F9D58, // Your Green
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.015,
+            vertexColors: true,
             transparent: true,
-            opacity: 0.8
+            opacity: 0.6,
+            color: 0x0F9D58
         });
 
-        // Mesh
-        const particlesMesh = new THREE.Points(geometry, material);
+        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
         scene.add(particlesMesh);
-
-        // Connecting Lines (Neural Network feel)
-        const lineMaterial = new THREE.LineBasicMaterial({ color: 0x0F9D58, transparent: true, opacity: 0.1 });
-        // We will animate lines dynamically in the loop if needed, but for performance, let's stick to a rotating point cloud that looks like a galaxy/brain.
-
         camera.position.z = 3;
 
-        // Interaction
-        let mouseX = 0;
-        let mouseY = 0;
-
-        document.addEventListener('mousemove', (event) => {
-            mouseX = event.clientX / window.innerWidth - 0.5;
-            mouseY = event.clientY / window.innerHeight - 0.5;
+        // Interaction Logic
+        let mouseX = 0, mouseY = 0;
+        document.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth) - 0.5;
+            mouseY = (e.clientY / window.innerHeight) - 0.5;
         });
-
-        // Animation Loop
-        const clock = new THREE.Clock();
 
         function animate() {
             requestAnimationFrame(animate);
-            const elapsedTime = clock.getElapsedTime();
+            particlesMesh.rotation.y += 0.001;
+            particlesMesh.rotation.x += 0.0005;
 
-            // Rotate entire system slowly
-            particlesMesh.rotation.y = elapsedTime * 0.05;
-            particlesMesh.rotation.x = elapsedTime * 0.02;
-
-            // Interactive tilt
-            particlesMesh.rotation.x += mouseY * 0.05;
-            particlesMesh.rotation.y += mouseX * 0.05;
+            // Parallax movement
+            gsap.to(particlesMesh.rotation, {
+                x: mouseY * 0.5,
+                y: mouseX * 0.5,
+                duration: 2
+            });
 
             renderer.render(scene, camera);
         }
-
         animate();
 
-        // Handle Resize
+        // 3. GSAP SCROLL ANIMATIONS
+        gsap.registerPlugin(ScrollTrigger);
+
+        gsap.to("#progressBar", {
+            width: "100%",
+            scrollTrigger: { scrub: 0.5 }
+        });
+
+        // Entrance Reveal
+        gsap.from(".hero-content", {
+            opacity: 0, y: 100, duration: 1.5, ease: "power4.out"
+        });
+
+        // Staggered Bento Cards
+        gsap.from(".bento-card", {
+            scrollTrigger: {
+                trigger: "#vision",
+                start: "top 80%"
+            },
+            opacity: 0,
+            y: 50,
+            stagger: 0.2,
+            duration: 1
+        });
+
+        // 4. RESIZE HANDLER
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
