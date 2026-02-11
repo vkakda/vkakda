@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vishal | System Architect & AI Builder</title>
+    <title>Vishal | Digital Identity</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -18,8 +19,8 @@
             --primary: #0F9D58; 
             --accent: #00f3ff;  
             --bg: #020205;      
-            --glass: rgba(15, 157, 88, 0.03);
-            --border: rgba(15, 157, 88, 0.2);
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(15, 157, 88, 0.3);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
@@ -29,21 +30,15 @@
             color: white; 
             font-family: 'Rajdhani', sans-serif; 
             overflow-x: hidden;
-            scrollbar-width: none;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) transparent;
         }
-
-        body::-webkit-scrollbar { display: none; }
 
         #canvas-container {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100vh;
             z-index: -1;
-        }
-
-        .progress-bar {
-            position: fixed; top: 0; left: 0; height: 4px; background: var(--primary); width: 0%; z-index: 9999;
-            box-shadow: 0 0 15px var(--primary);
         }
 
         /* NAVIGATION */
@@ -53,20 +48,10 @@
             display: flex; justify-content: space-between; align-items: center;
             z-index: 100;
             background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+            backdrop-filter: blur(10px);
         }
-        .logo { font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 1.2rem; letter-spacing: 4px; }
-        .logo span { color: var(--primary); text-shadow: 0 0 10px var(--primary); }
+        .nav-brand { font-family: 'Share Tech Mono'; color: var(--primary); letter-spacing: 2px; }
         
-        .status-terminal {
-            font-family: 'Share Tech Mono', monospace;
-            color: var(--accent);
-            font-size: 0.7rem;
-            letter-spacing: 1px;
-            background: rgba(0,243,255,0.05);
-            padding: 5px 15px;
-            border: 1px solid var(--accent);
-        }
-
         /* HERO */
         section {
             min-height: 100vh;
@@ -84,30 +69,38 @@
 
         h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: clamp(3rem, 8vw, 6rem);
-            line-height: 0.9;
+            font-size: clamp(4rem, 12vw, 8rem);
+            line-height: 0.8;
             margin-bottom: 20px;
-            background: linear-gradient(45deg, #fff 30%, var(--primary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(15, 157, 88, 0.5);
         }
 
         .subtitle {
             font-family: 'Share Tech Mono';
             color: var(--accent);
             font-size: 1.2rem;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             display: block;
         }
 
-        .philosophy-text {
-            font-size: 1.1rem;
-            color: #888;
-            max-width: 550px;
-            line-height: 1.8;
+        /* ABOUT SECTION GLASS */
+        .about-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 30px;
+            border-radius: 4px;
+            line-height: 1.6;
+            color: #ccc;
             margin-bottom: 30px;
-            border-left: 2px solid var(--primary);
-            padding-left: 25px;
+            position: relative;
+        }
+        .about-card::before {
+            content: "BIO_DATA";
+            position: absolute; top: -10px; left: 20px;
+            background: var(--primary);
+            color: black; font-family: 'Share Tech Mono';
+            padding: 2px 10px; font-size: 0.7rem;
         }
 
         /* PROFILE VISUAL */
@@ -116,100 +109,103 @@
             display: flex; justify-content: center; align-items: center;
         }
 
-        .profile-hex {
-            width: 350px; height: 350px;
-            clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-            background: var(--primary);
-            padding: 5px;
-            animation: pulse 4s infinite;
+        .profile-frame {
+            width: 380px; height: 380px;
+            border: 2px solid var(--primary);
+            padding: 15px;
+            position: relative;
+            animation: frameRotate 20s linear infinite;
         }
 
         .profile-img {
             width: 100%; height: 100%;
-            background-color: #050505;
-            clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-            background-image: url('https://ui-avatars.com/api/?name=V&background=0a0a0a&color=0F9D58&size=512'); /* Placeholder */
+            background-color: #111;
+            background-image: url('YOUR_IMAGE_URL_HERE'); /* PASTE YOUR DRIVE/IMAGE LINK HERE */
             background-size: cover;
-            filter: grayscale(1) contrast(1.2);
+            background-position: center;
+            filter: grayscale(0.5) sepia(0.2) hue-rotate(80deg);
+            transition: 0.5s;
         }
+        .profile-img:hover { filter: grayscale(0); }
 
-        /* CARDS / VISION */
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            width: 100%;
+        /* SOCIAL LINKS */
+        .social-bar {
+            display: flex; gap: 20px; margin-top: 20px;
         }
-
-        .bento-card {
-            background: var(--glass);
-            border: 1px solid var(--border);
-            padding: 30px;
-            border-radius: 5px;
-            backdrop-filter: blur(10px);
-            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        .social-icon {
+            color: white; font-size: 1.5rem; transition: 0.3s;
+            text-decoration: none; border: 1px solid var(--border);
+            width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;
         }
+        .social-icon:hover { color: var(--accent); border-color: var(--accent); transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,243,255,0.2); }
 
-        .bento-card:hover {
-            background: rgba(15, 157, 88, 0.1);
-            border-color: var(--primary);
-            transform: scale(1.02);
-        }
-
-        .bento-card h3 { font-family: 'Orbitron'; color: var(--primary); margin-bottom: 15px; font-size: 0.9rem; letter-spacing: 2px;}
-
-        /* UTILS */
-        .btn {
-            padding: 15px 35px;
-            font-family: 'Orbitron';
-            text-decoration: none;
-            font-weight: bold;
-            display: inline-block;
+        /* COFFEE BUTTON */
+        .coffee-btn {
+            background: #FFDD00; color: #000;
+            padding: 15px 30px; font-family: 'Orbitron'; font-weight: 900;
+            text-decoration: none; display: inline-flex; align-items: center; gap: 10px;
+            margin-top: 20px; border-radius: 2px;
             transition: 0.3s;
-            position: relative;
-            font-size: 0.8rem;
         }
-        .btn-main { background: var(--primary); color: #000; clip-path: polygon(0 0, 90% 0, 100% 30%, 100% 100%, 10% 100%, 0 70%); }
-        .btn-main:hover { background: #fff; box-shadow: 0 0 30px rgba(255,255,255,0.4); }
+        .coffee-btn:hover { background: #fff; transform: scale(1.05); }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0px var(--primary)); }
-            50% { transform: scale(1.02); filter: drop-shadow(0 0 20px var(--primary)); }
+        /* BENTO VISION */
+        .bento-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%;
         }
+        .bento-card {
+            background: rgba(255,255,255,0.02); border: 1px solid var(--border);
+            padding: 30px; transition: 0.4s;
+        }
+        .bento-card:hover { border-color: var(--primary); background: rgba(15,157,88,0.05); }
+        .bento-card h3 { font-family: 'Orbitron'; color: var(--primary); margin-bottom: 10px; }
 
-        @media (max-width: 1000px) {
+        @keyframes frameRotate { 0% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; } 50% { border-radius: 60% 40% 30% 70% / 50% 60% 40% 60%; } 100% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; } }
+
+        @media (max-width: 1100px) {
             .hero-content { grid-template-columns: 1fr; text-align: center; }
-            .philosophy-text { margin: 0 auto 30px; border: none; padding: 0; }
+            .profile-frame { margin: 0 auto; width: 280px; height: 280px; }
+            .social-bar { justify-content: center; }
             .bento-grid { grid-template-columns: 1fr; }
-            .profile-hex { width: 250px; height: 250px; margin: 0 auto; }
         }
     </style>
 </head>
 <body>
 
-    <div class="progress-bar" id="progressBar"></div>
     <div id="canvas-container"></div>
 
     <nav>
-        <div class="logo">VISHAL<span>.ARCH</span></div>
-        <div class="status-terminal" id="terminal-clock">SYSTEM_STABLE // 12:00:00</div>
+        <div class="nav-brand">NETWORK_ID: <span style="color:white">VISHAL_V1.0</span></div>
+        <div id="clock" style="font-family: 'Share Tech Mono';">00:00:00</div>
     </nav>
 
-    <section id="hero">
+    <section>
         <div class="hero-content">
             <div class="text-block">
-                <span class="subtitle">ENGINEER • THINKER • FOUNDER</span>
-                <h1>VISHAL<br>KAUSHIK</h1>
-                <p class="philosophy-text">
-                    I did not begin with computers. I began with curiosity. 
-                    I build digital products where engineering meets empathy and speed meets reliability.
-                </p>
-                <div class="btn-group">
-                    <a href="mailto:vjcse12@gmail.com" class="btn btn-main">INITIATE CONTACT</a>
+                <span class="subtitle">FULL-STACK ENGINEER & SYSTEM THINKER</span>
+                <h1>VISHAL</h1>
+                
+                <div class="about-card">
+                    Before code, there were stories and human patterns. 
+                    I prepared for defence services, which built the discipline I use to build systems today.
+                    I believe that <b>consistency builds power that intensity cannot.</b>
+                    Now, I build digital products where engineering meets empathy.
                 </div>
+
+                <div class="social-bar">
+                    <a href="https://github.com/YOUR_GITHUB" class="social-icon"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/YOUR_LINKEDIN" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://twitter.com/YOUR_X" class="social-icon"><i class="fab fa-x-twitter"></i></a>
+                    <a href="mailto:vjcse12@gmail.com" class="social-icon"><i class="fas fa-envelope"></i></a>
+                </div>
+
+                <a href="https://buymeacoffee.com/vishalkaushik" class="coffee-btn">
+                    <i class="fas fa-coffee"></i> SUPPORT MY WORK
+                </a>
             </div>
+
             <div class="profile-wrapper">
-                <div class="profile-hex">
+                <div class="profile-frame">
                     <div class="profile-img"></div>
                 </div>
             </div>
@@ -218,122 +214,74 @@
 
     <section id="vision">
         <div style="width: 100%;">
-            <span class="subtitle">// CORE_MANIFESTO</span>
-            <h2 style="font-family: 'Orbitron'; font-size: 3rem; margin-bottom: 40px;">SYSTEM THINKING</h2>
+            <h2 style="font-family: 'Orbitron'; font-size: 2.5rem; margin-bottom: 40px; border-bottom: 1px solid var(--border); padding-bottom: 20px;">
+                SYSTEM_LOGS
+            </h2>
             <div class="bento-grid">
-                <div class="bento-card reveal">
-                    <h3>01 / PURPOSE</h3>
-                    <p>Technology should feel natural. Design should feel invisible. Work should feel purposeful.</p>
+                <div class="bento-card">
+                    <h3>01 / PHILOSOPHY</h3>
+                    <p>I focus on building things that are clean, scalable, and human. The child who watched stars still exists—the dream only evolved.</p>
                 </div>
-                <div class="bento-card reveal">
-                    <h3>02 / DISCIPLINE</h3>
-                    <p>Consistency builds power that intensity cannot. I focus on building things that are clean and scalable.</p>
+                <div class="bento-card">
+                    <h3>02 / STACK</h3>
+                    <p>React.js, Next.js, Node.js, AI Workflows. I move ideas from concept to deployment with precision.</p>
                 </div>
-                <div class="bento-card reveal">
-                    <h3>03 / REACH</h3>
-                    <p>Building systems that behave like galaxies—interconnected, efficient, and powerful.</p>
+                <div class="bento-card">
+                    <h3>03 / MISSION</h3>
+                    <p>To build intelligent digital infrastructure that empowers individuals and scales across society.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer style="padding: 100px 10%; background: linear-gradient(to top, var(--primary), transparent); margin-top: 100px; text-align: center;">
-        <h2 style="font-family: 'Orbitron'; color: #000; margin-bottom: 20px;">BUILDING THE FUTURE</h2>
-        <p style="color: #000; font-family: 'Share Tech Mono';">vjcse12@gmail.com • Based in India • Scale Globally</p>
+    <footer style="padding: 50px; text-align: center; border-top: 1px solid var(--border); font-family: 'Share Tech Mono'; color: #444;">
+        // BUILD_WITH_CLARITY // BUILD_FOR_HUMANS // © 2026 VISHAL
     </footer>
 
     <script>
-        // 1. TERMINAL CLOCK
+        // 1. CLOCK
         function updateClock() {
             const now = new Date();
-            const time = now.getHours().toString().padStart(2, '0') + ":" + 
-                         now.getMinutes().toString().padStart(2, '0') + ":" + 
-                         now.getSeconds().toString().padStart(2, '0');
-            document.getElementById('terminal-clock').innerText = `SYSTEM_STABLE // ${time}`;
+            document.getElementById('clock').innerText = now.toTimeString().split(' ')[0];
         }
         setInterval(updateClock, 1000);
 
-        // 2. THREE.JS 3D BACKGROUND (THE GALAXY)
+        // 2. THREE.JS PARTICLE ENGINE
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.getElementById('canvas-container').appendChild(renderer.domElement);
 
-        // Create Particle Galaxy
-        const particlesGeometry = new THREE.BufferGeometry();
-        const count = 3000;
-        const positions = new Float32Array(count * 3);
-        const colors = new Float32Array(count * 3);
+        const geo = new THREE.BufferGeometry();
+        const count = 1500;
+        const posArr = new Float32Array(count * 3);
+        for(let i = 0; i < count * 3; i++) { posArr[i] = (Math.random() - 0.5) * 12; }
+        geo.setAttribute('position', new THREE.BufferAttribute(posArr, 3));
 
-        for(let i = 0; i < count * 3; i++) {
-            positions[i] = (Math.random() - 0.5) * 10;
-            colors[i] = Math.random();
-        }
-        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-        particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-
-        const particlesMaterial = new THREE.PointsMaterial({
-            size: 0.015,
-            vertexColors: true,
-            transparent: true,
-            opacity: 0.6,
-            color: 0x0F9D58
-        });
-
-        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-        scene.add(particlesMesh);
-        camera.position.z = 3;
-
-        // Interaction Logic
-        let mouseX = 0, mouseY = 0;
-        document.addEventListener('mousemove', (e) => {
-            mouseX = (e.clientX / window.innerWidth) - 0.5;
-            mouseY = (e.clientY / window.innerHeight) - 0.5;
-        });
+        const mat = new THREE.PointsMaterial({ size: 0.02, color: 0x0F9D58, transparent: true, opacity: 0.5 });
+        const mesh = new THREE.Points(geo, mat);
+        scene.add(mesh);
+        camera.position.z = 5;
 
         function animate() {
             requestAnimationFrame(animate);
-            particlesMesh.rotation.y += 0.001;
-            particlesMesh.rotation.x += 0.0005;
-
-            // Parallax movement
-            gsap.to(particlesMesh.rotation, {
-                x: mouseY * 0.5,
-                y: mouseX * 0.5,
-                duration: 2
-            });
-
+            mesh.rotation.y += 0.002;
             renderer.render(scene, camera);
         }
         animate();
 
-        // 3. GSAP SCROLL ANIMATIONS
+        // 3. GSAP REVEALS
         gsap.registerPlugin(ScrollTrigger);
-
-        gsap.to("#progressBar", {
-            width: "100%",
-            scrollTrigger: { scrub: 0.5 }
-        });
-
-        // Entrance Reveal
-        gsap.from(".hero-content", {
-            opacity: 0, y: 100, duration: 1.5, ease: "power4.out"
-        });
-
-        // Staggered Bento Cards
+        gsap.from("h1", { opacity: 0, x: -100, duration: 1.5, ease: "power4.out" });
+        gsap.from(".about-card", { opacity: 0, y: 30, duration: 1, delay: 0.5 });
+        gsap.from(".profile-frame", { scale: 0.8, opacity: 0, duration: 2, ease: "elastic.out(1, 0.3)" });
+        
         gsap.from(".bento-card", {
-            scrollTrigger: {
-                trigger: "#vision",
-                start: "top 80%"
-            },
-            opacity: 0,
-            y: 50,
-            stagger: 0.2,
-            duration: 1
+            scrollTrigger: { trigger: "#vision", start: "top 80%" },
+            opacity: 0, y: 50, stagger: 0.2, duration: 1
         });
 
-        // 4. RESIZE HANDLER
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
